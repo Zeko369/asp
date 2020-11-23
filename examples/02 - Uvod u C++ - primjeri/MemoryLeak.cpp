@@ -18,6 +18,8 @@ void f() {
 }
 
 int main(void) {
-   f();
+   while (1) {
+      f();
+   }
    return 0;
 }

@@ -18,6 +18,16 @@ class Fraction {
     bool operator==(Fraction &other) {
         return up == other.up && down == other.down;
     }
+
+    friend std::ostream &operator<<(std::ostream &os, const Fraction &r) {
+        os << r.up << "/" << r.down;
+        return os;
+    }
+
+    friend std::istream &operator>>(std::istream &is, Fraction &r) {
+        is >> r.up >> r.down;
+        return is;
+    }
 };
 
 int main(void) {
@@ -26,6 +36,11 @@ int main(void) {
 
     std::cout << a.up << " " << a.down << std::endl;
     std::cout << (a == b ? "Same" : "Not same") << std::endl;
+
+    b.down = 2;
+    std::cout << (a == b ? "Same" : "Not same") << std::endl;
+
+    std::cout << a << " " << b << std::endl;
 
     return 0;
 }
