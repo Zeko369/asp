@@ -57,7 +57,9 @@ template <class T> class Stack {
 class RPN {
    char operators[5] = "+-*/";
    char precedences[5] = "2211";
-   bool isOperator(char c) { return c != '\0' && strchr(operators, c) != nullptr; }
+   bool isOperator(char c) {
+      return c != '\0' && strchr(operators, c) != nullptr;
+   }
    int precedence(char op) {
       int pos = strchr(operators, op) - operators;
       return precedences[pos];
