@@ -2,8 +2,11 @@
 
 class Animal {
   public:
+    inline static int autoIncrement = 0;
+
+    int id;
     std::string name;
-    Animal(std::string n) : name(n){};
+    Animal(std::string n) : name(n), id(++autoIncrement){};
 
     virtual void say() = 0;
 };
@@ -28,8 +31,11 @@ int main() {
     Animal *arr[2] = {&a, &b};
 
     for (int i = 0; i < 2; i++) {
+        std::cout << arr[i]->id << std::endl;
         arr[i]->say();
     }
+
+    std::cout << Animal::autoIncrement << std::endl;
 
     return 0;
 }
