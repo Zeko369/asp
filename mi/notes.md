@@ -34,3 +34,12 @@ std::getline(std::cin, str);
 #include <iomanip>
 std::cout << std::setw(10) << "hello";
 ```
+
+## Sort
+
+```cpp
+sort(bigger.begin(), bigger.end());
+
+// Reverse
+sort(bigger.begin(), bigger.end(), std::greater<>());
+```
