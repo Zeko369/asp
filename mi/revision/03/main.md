@@ -11,7 +11,7 @@ O - WORST
 n*n = n^2
 
 // sort then bin
-n log(n) + n * log(n)
+n * log(n) + n * log(n)
 ```
 
 ## Block search

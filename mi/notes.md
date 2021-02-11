@@ -43,3 +43,10 @@ sort(bigger.begin(), bigger.end());
 // Reverse
 sort(bigger.begin(), bigger.end(), std::greater<>());
 ```
+
+## Lambdas
+
+```cpp
+// This is how to lambda
+for_each(v.begin(), v.end(), [](auto a) { std::cout << a << std::endl; });
+```
