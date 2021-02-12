@@ -88,6 +88,8 @@
       "sstream": "cpp",
       "stack": "cpp",
       "string_view": "cpp",
-      "unordered_map": "cpp"
+      "unordered_map": "cpp",
+      "*.tcc": "cpp",
+      "list": "cpp"
    }
 }
