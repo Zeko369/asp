@@ -9,8 +9,6 @@ class BinTree {
         std::shared_ptr<Node> right;
     };
 
-    std::shared_ptr<Node> root;
-
     void insert(std::shared_ptr<Node> &n, char c) {
         if (n->val > c) {
             if (n->left != nullptr) {
@@ -111,7 +109,32 @@ class BinTree {
         }
     }
 
+    int getMin(std::shared_ptr<Node> &n) {
+        if (n->left) {
+            return getMin(n->left);
+        }
+
+        return n->val;
+    }
+
+    int getMax(std::shared_ptr<Node> &n) {
+        if (n->right) {
+            return getMax(n->right);
+        }
+
+        return n->val;
+    }
+
+    void getMinMaxInternal(std::shared_ptr<Node> &n) {
+        char minVal = getMin(n);
+        char maxVal = getMax(n);
+
+        std::cout << minVal << " = " << maxVal << std::endl;
+    }
+
   public:
+    std::shared_ptr<Node> root;
+
     void add(char c) {
         if (root == nullptr) {
             std::shared_ptr<Node> newNode = std::make_shared<Node>();
@@ -125,8 +148,35 @@ class BinTree {
     int count() { return this->countInternal(root); }
     int maxDepth() { return this->maxDepthInternal(root); }
 
+    void getMinMax() { return this->getMinMaxInternal(root); }
     void remove(char c) { this->del(root, c); }
-    void inorder() { inorderInternal(root); }
+    void inorder() { this->inorderInternal(root); }
+
+    bool internalCompare(std::shared_ptr<Node> a, std::shared_ptr<Node> b) {
+        if ((a == nullptr && b != nullptr) || (a != nullptr && b == nullptr)) {
+            return false;
+        }
+
+        if (a->val != b->val) {
+            return false;
+        }
+
+        if (a->right || b->right) {
+            if (!internalCompare(a->right, b->right)) {
+                return false;
+            }
+        }
+
+        if (a->left || b->left) {
+            if (!internalCompare(a->left, b->left)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool compare(BinTree &other) { return internalCompare(other.root, root); }
 };
 
 int main() {
@@ -155,6 +205,31 @@ int main() {
     bt.inorder();
     std::cout << std::endl;
     std::cout << bt.count() << "|" << bt.maxDepth() << std::endl;
+
+    bt.getMinMax();
+
+    BinTree bt1 = BinTree();
+    BinTree bt2 = BinTree();
+    BinTree bt3 = BinTree();
+
+    bt1.add(3);
+    bt2.add(3);
+    bt3.add(3);
+
+    bt1.add(1);
+    bt2.add(1);
+    bt3.add(1);
+
+    bt1.add(2);
+    bt2.add(2);
+    bt3.add(4);
+
+    bt1.add(5);
+    bt2.add(5);
+    bt3.add(5);
+
+    std::cout << (bt1.compare(bt2) ? "true" : "false") << std::endl;
+    std::cout << (bt1.compare(bt3) ? "true" : "false") << std::endl;
 
     return 0;
 }

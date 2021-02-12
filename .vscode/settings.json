@@ -90,6 +90,12 @@
       "string_view": "cpp",
       "unordered_map": "cpp",
       "*.tcc": "cpp",
-      "list": "cpp"
+      "list": "cpp",
+      "ranges": "cpp",
+      "clocale": "cpp",
+      "compare": "cpp",
+      "concepts": "cpp",
+      "memory_resource": "cpp",
+      "cinttypes": "cpp"
    }
 }
