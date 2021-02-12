@@ -132,6 +132,51 @@ class BinTree {
         std::cout << minVal << " = " << maxVal << std::endl;
     }
 
+    void mirrorInternal(std::shared_ptr<Node> &n) {
+        if (!n) {
+            return;
+        }
+
+        std::shared_ptr<Node> tmp = n->left;
+        n->left = n->right;
+        n->right = tmp;
+
+        mirrorInternal(n->left);
+        mirrorInternal(n->right);
+    }
+
+    bool find(std::shared_ptr<Node> n, char c) {
+        if (!n) {
+            return false;
+        }
+
+        if (n->val > c) {
+            return find(n->left, c);
+        } else if (n->val < c) {
+            return find(n->right, c);
+        } else {
+            return true;
+        }
+    }
+
+    int internalSum(std::shared_ptr<Node> &n) {
+        if (!n) {
+            return 0;
+        }
+
+        int val = n->val - 48;
+
+        if (n->left) {
+            val += internalSum(n->left);
+        }
+
+        if (n->right) {
+            val += internalSum(n->right);
+        }
+
+        return val;
+    }
+
   public:
     std::shared_ptr<Node> root;
 
@@ -177,6 +222,15 @@ class BinTree {
     }
 
     bool compare(BinTree &other) { return internalCompare(other.root, root); }
+
+    // breaks some stuff
+    void mirror() { this->mirrorInternal(root); }
+
+    bool exists(char c) { return this->find(root, c); }
+
+    float average() {
+        return (float)this->internalSum(root) / (float)this->count();
+    }
 };
 
 int main() {
@@ -184,6 +238,7 @@ int main() {
     bt.add('3');
 
     std::cout << bt.count() << "|" << bt.maxDepth() << std::endl;
+    std::cout << bt.average() << std::endl;
     bt.add('2');
     bt.add('5');
     bt.add('1');
@@ -191,6 +246,7 @@ int main() {
     bt.add('9');
     bt.add('4');
     std::cout << bt.count() << "|" << bt.maxDepth() << std::endl;
+    std::cout << bt.average() << std::endl;
 
     bt.inorder();
     std::cout << std::endl;
@@ -204,9 +260,17 @@ int main() {
     bt.remove('9');
     bt.inorder();
     std::cout << std::endl;
+    bt.getMinMax();
+
     std::cout << bt.count() << "|" << bt.maxDepth() << std::endl;
 
-    bt.getMinMax();
+    bt.inorder();
+    std::cout << std::endl;
+
+    // bt.mirror();
+
+    // bt.inorder();
+    // std::cout << std::endl;
 
     BinTree bt1 = BinTree();
     BinTree bt2 = BinTree();
@@ -230,6 +294,10 @@ int main() {
 
     std::cout << (bt1.compare(bt2) ? "true" : "false") << std::endl;
     std::cout << (bt1.compare(bt3) ? "true" : "false") << std::endl;
+
+    std::cout << "Finds:" << std::endl;
+    std::cout << (bt.exists('1') ? "true" : "false") << std::endl;
+    std::cout << (bt.exists('6') ? "true" : "false") << std::endl;
 
     return 0;
 }
